@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- 把对象的创建交给spring来管理 -->
+    <!-- 创建bean的3种方式
+            1 使用默认构造函数创建    <bean id="" class="全限定类名" />
+                此时如果类中没有默认构造函数，则无法创建
+            2 使用某个类中的方法创建  用1方式配完某个类后，<bean id="" factory-bean="类名" factory-method="类中方法名" />
+            3 在2基础上，为静态方法   <bean id="" class="全限定类名" factory-method="类中方法名" />
+     -->
+    <!-- bean的作用范围调整(在bean标签内部使用scope属性)
+            singleton       单例（默认）
+            prototype       多例
+            request         作用于web应用的请求范围
+            session         作用于web应用的会话范围
+            global-session  作用于集群环境的会话范围
+     -->
+    <!-- bean的生命周期
+            单例      随容器的创建和销毁而出生/死亡
+            多例      随对象的创建和销毁而出生/死亡
+     -->
+    <!-- spring中的依赖注入————依赖关系的维护
+            可注入的数据类型（经常变化的数据，不适用注入）
+            1 基本类型和String
+            2 其他bean类型（在spring的ioc容器中出现过的bean对象）
+            3 复杂类型/集合类型
+
+            注入方式：
+            1 使用构造函数       在bean内使用constructor-arg
+                type/index/name: 用于指定给构造函数中哪个参数赋值
+                value:           用于给基本类型和string类型提供数据
+                ref:             用于给其他的bean类型的数据提供数据
+              *在获取bean对象时，必须把所有参数全部注入，否则无法完成对象创建
+              *一般不用
+
+            2 使用setter方法    在bean内使用property
+                name:            用于指定注入时的set方法名称
+              *不要求全部注入
+
+            3 使用注解
+
+     -->
+
+    <!-- 使用构造函数注入 -->
+    <bean id="accountService1" class="com.service.impl.AccountServiceImpl" >
+        <constructor-arg name="name" value="小明" />
+        <constructor-arg name="age" value="18" />
+        <constructor-arg name="birthday" ref="now" />
+    </bean>
+
+    <!-- 使用setter方法注入 -->
+    <bean id="accountService2" class="com.service.impl.AccountServiceImpl" >
+        <property name="name" value="小红" />
+        <property name="age" value="40" />
+        <property name="birthday" ref="now" />
+    </bean>
+
+    <!-- 复杂类型/集合类型的注入 -->
+    <bean id="accountService3" class="com.service.impl.AccountServiceImpl" >
+        <property name="strings">
+            <array>
+                <value>AAA</value>
+                <value>BBB</value>
+                <value>CCC</value>
+            </array>
+        </property>
+        <property name="list">
+            <list>
+                <value>12</value>
+                <value>asd</value>
+                <value>小明</value>
+            </list>
+        </property>
+        <property name="set">
+            <set>
+                <value>123</value>
+                <value>qwer</value>
+                <value>天</value>
+            </set>
+        </property>
+        <property name="map">
+            <map>
+                <entry key="1" value="AAA" />
+                <entry key="2" value="BBB" />
+                <entry key="3" value="CCC" />
+            </map>
+        </property>
+        <property name="properties">
+            <props>
+                <prop key="test1">aaa</prop>
+                <prop key="test2">bbb</prop>
+                <prop key="test3">ccc</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="accountDao" class="com.dao.impl.AccountDaoImpl" />
+
+    <!-- 配置一个日期对象 -->
+    <bean id="now" class="java.util.Date" />
+
+</beans>

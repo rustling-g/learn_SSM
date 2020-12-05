@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <bean id="accountService" class="com.service.impl.AccountServiceImpl" />
+
+    <!-- spring中基于xml的aop配置
+        1 把通知的bean也交给spring来管理
+        2 使用aop：config表明开始aop的配置
+        3 使用aop：aspect表明开始配置切面
+            id:切面唯一标识
+            ref:指定通知类的id
+        4 在aop：aspect内部使用对应的标签来配置通知的类型（此例中bean是前置）及将其与切入点方法关联
+            method:用于指定logger中哪个方法是前置通知
+            pointcut:用于指定切入点表达式，该表达式的含义指的是对业务层中哪些方法增强
+                     一般是切到业务层实现类下的所有方法
+                     格式：  execution((访问修饰符) 返回值 包名.包名...类名.方法名(参数列表))
+                            全通配写法      可省      *    * .  * ... * .  *   (*)
+                                                         *.. 表示当前包及其子包
+                                                                              (..) 表示有无参数均可
+    -->
+    <bean id="logger" class="com.utils.Logger" />
+
+    <!-- 配置AOP -->
+    <aop:config>
+        <!-- 配置切面 -->
+        <aop:aspect id="logAdvice" ref="logger">
+
+            <!-- 配置切入点表达式(如果写在aop:aspect标签内，只能当前切面使用 当写在外面时，必须写在aop:aspect前) -->
+            <aop:pointcut id="pt1" expression="execution(* com.service.impl.*.*(..))"/>
+
+            <aop:before method="beforePrintLog" pointcut-ref="pt1" />
+            <aop:after-returning method="afterReturnPrintLog" pointcut-ref="pt1" />
+            <aop:after-throwing method="afterThrowPrintLog" pointcut-ref="pt1" />
+            <aop:after method="afterPrintLog" pointcut-ref="pt1" />
+
+            <aop:around method="aroundPrintLog" pointcut-ref="pt1" />
+        </aop:aspect>
+    </aop:config>
+
+</beans>

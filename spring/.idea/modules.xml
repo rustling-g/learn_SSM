@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/aop/aop.iml" filepath="$PROJECT_DIR$/aop/aop.iml" />
+      <module fileurl="file://$PROJECT_DIR$/aop_annotation/aop_annotation.iml" filepath="$PROJECT_DIR$/aop_annotation/aop_annotation.iml" />
+      <module fileurl="file://$PROJECT_DIR$/jdbcTemplate/jdbcTemplate.iml" filepath="$PROJECT_DIR$/jdbcTemplate/jdbcTemplate.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/spring.iml" filepath="$PROJECT_DIR$/.idea/spring.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spring_annotation/spring_annotation.iml" filepath="$PROJECT_DIR$/spring_annotation/spring_annotation.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spring_example/spring_example.iml" filepath="$PROJECT_DIR$/spring_example/spring_example.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spring_example_upgrade/spring_example (1).iml" filepath="$PROJECT_DIR$/spring_example_upgrade/spring_example (1).iml" />
+      <module fileurl="file://$PROJECT_DIR$/spring_xml/spring_xml.iml" filepath="$PROJECT_DIR$/spring_xml/spring_xml.iml" />
+    </modules>
+  </component>
+</project>
